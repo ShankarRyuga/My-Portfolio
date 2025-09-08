@@ -3,14 +3,20 @@
     <section class="contact">
       <h2 class="section-header">Contact Me</h2>
       <form @submit.prevent="submitForm" class="contact-form">
-        <label for="name">Name</label>
-        <input type="text" id="name" v-model="form.name" required>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" v-model="form.name" required>
+        </div>
         
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="form.email" required>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" v-model="form.email" required>
+        </div>
         
-<label for="message">Message</label>
-        <textarea id="message" v-model="form.message" rows="5" required></textarea>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" v-model="form.message" rows="5" required></textarea>
+        </div>
         
         <button type="submit" :disabled="isSubmitting">
           {{ isSubmitting ? 'Sending...' : 'Send' }}
@@ -45,7 +51,7 @@ export default {
       this.errorMessage = '';
 
       try {
-        const response = await fetch('http://localhost:5000/send_email', {
+        const response = await fetch('https://my-portfolio-ffk5.onrender.com/send_email', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -91,16 +97,25 @@ export default {
   gap: 1rem;
   max-width: 600px;
   margin: 0 auto;
-  align-items: center; /* This centers all items in the form */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
 }
 
 .contact-form label {
   font-weight: bold;
+  width: 100px; /* Gives the label a fixed width */
+  text-align: right;
 }
 
 .contact-form input,
 .contact-form textarea {
-  width: 400px;
+  width: 100%; /* Now takes up 100% of the remaining space in the form-group */
   padding: 0.8rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -115,6 +130,7 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s;
   width: 400px;
+  margin: 0 auto;
 }
 
 .contact-form button:hover {
